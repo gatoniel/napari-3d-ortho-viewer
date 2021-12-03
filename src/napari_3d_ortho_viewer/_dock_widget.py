@@ -74,8 +74,9 @@ class OrthoViewerWidget(QWidget):
         """Disconnect layers and close viewer."""
         # for layer in viewer.layers:
         #     unlink_layers([layer])
-        viewer.dims.events.current_step.disconnect()
-        viewer.close()
+        if viewer is not None:
+            viewer.dims.events.current_step.disconnect()
+            viewer.close()
 
     @staticmethod
     def delete_named_layer(viewer: napari.Viewer, name: str) -> None:
