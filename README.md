@@ -13,6 +13,14 @@ Napari 3D Ortho Viewer - an ortho viewer for napari for 3D images
 
 This [napari] plugin was generated with [Cookiecutter] using [@napari]'s [cookiecutter-napari-plugin] template.
 
+This plugin is heavily inspired by [ortho-view-napari].
+
+Check out this post on image.sc (https://forum.image.sc/t/napari-visualization-in-3-planes/57768) for more infos about multiview support in [napari].
+
+This viewer has some additional features:
+- double click to jump to specific position in all slices
+- additional 3d view of 3d stack with lines or planes indicating current position
+
 <!--
 Don't miss the full getting started guide to set up your new package:
 https://github.com/napari/cookiecutter-napari-plugin#getting-started
@@ -65,3 +73,4 @@ If you encounter any problems, please [file an issue] along with a detailed desc
 [tox]: https://tox.readthedocs.io/en/latest/
 [pip]: https://pypi.org/project/pip/
 [PyPI]: https://pypi.org/
+[ortho-view-napari]: https://github.com/JoOkuma/ortho-view-napari
