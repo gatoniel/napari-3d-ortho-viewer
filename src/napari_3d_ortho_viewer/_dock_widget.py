@@ -107,7 +107,6 @@ class OrthoViewerWidget(QWidget):
         for layer in self.old_viewer.layers:
             layer.refresh()
             if isinstance(layer, Labels):
-                layer.events.set_data.connect(self.refresh_on_set_data)
                 self.lbl_layers.append(layer)
             if isinstance(layer, Image):
                 self.img_layers.append(layer)
@@ -226,6 +225,10 @@ class OrthoViewerWidget(QWidget):
                     if isinstance(layer, Labels):
                         layer.events.set_data.connect(self.refresh_on_set_data)
                         self.lbl_layers.append(layer)
+
+        for layer in self.old_viewer.layers:
+            if isinstance(layer, Labels) and not layer.name.startswith("slicing"):
+                layer.events.set_data.connect(self.refresh_on_set_data)
 
         self.update_all()
 
