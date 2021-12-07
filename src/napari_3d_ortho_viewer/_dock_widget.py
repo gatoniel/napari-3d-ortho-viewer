@@ -47,7 +47,7 @@ class OrthoViewerWidget(QWidget):
         self.checkbox.changed.connect(self.checkbox_changed)
         self.layout().addWidget(self.checkbox.native)
 
-    def checkbox_changed(self, event=None) -> None:
+    def checkbox_changed(self) -> None:
         """Either start or stop 3D Ortho viewer."""
         if self.checkbox.value:
             self.start_ortho_viewer()
