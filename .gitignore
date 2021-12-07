@@ -1,6 +1,7 @@
 # tif file
 img.tif
 lbl.tif
+.win-napari-3d-ortho-viewer/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
