@@ -72,6 +72,8 @@ class CropLabelsWidget(QWidget):
             ].index(True)
             selected_layer = self.old_viewer.layers[first_labels_layer_ind]
 
+        print(selected_layer.data.dtype)
+        print(type(selected_layer.data))
         self.regions = regionprops(selected_layer.data)
         area = np.array([reg.area for reg in self.regions])
 
@@ -108,6 +110,7 @@ class CropLabelsWidget(QWidget):
         slices: Tuple[slice],
     ) -> None:
         """Copy layers from old_viewer to viewer."""
+        print(slices)
         for layer in self.old_viewer.layers:
             name = layer.name
             if isinstance(layer, Labels):
