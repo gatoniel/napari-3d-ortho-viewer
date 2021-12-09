@@ -97,10 +97,7 @@ class OrthoViewerWidget(QWidget):
             data = layer.as_layer_data_tuple()
             name = data[1]["name"]
             if not (name.startswith("slicing") or name.startswith("sliced")):
-                new_layer = viewer._add_layer_from_data(*data)[0]
-                # change contour of copied lbl layers
-                if isinstance(layer, Labels):
-                    new_layer.contour = 1
+                viewer._add_layer_from_data(*data)[0]
 
     def prepare_old_viewer(self) -> None:
         """Find lbl and img layers and add sliced img layer."""
@@ -221,10 +218,15 @@ class OrthoViewerWidget(QWidget):
             v.mouse_double_click_callbacks.append(self.mouse_click)
             for layer in v.layers:
                 name = layer.name
-                if not name.startswith("slicing"):
-                    if isinstance(layer, Labels):
-                        layer.events.set_data.connect(self.refresh_on_set_data)
-                        self.lbl_layers.append(layer)
+                if not name.startswith("slicing") and isinstance(layer, Labels):
+                    layer.events.set_data.connect(self.refresh_on_set_data)
+                    self.lbl_layers.append(layer)
+
+        # set contour to 1
+        for v in [self.xy_viewer, self.yz_viewer, self.xz_viewer]:
+            for layer in v.layers:
+                if not layer.name.startswith("slicing") and isinstance(layer, Labels):
+                    layer.contour = 1
 
         for layer in self.old_viewer.layers:
             if isinstance(layer, Labels) and not layer.name.startswith("slicing"):
