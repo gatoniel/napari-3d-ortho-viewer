@@ -16,7 +16,7 @@ def str_to_int_list(s: str, delimiter=",") -> List[int]:
     return [int(i) for i in s.split(delimiter) if i.isdigit()]
 
 
-class CropLabelsWidget(QWidget):
+class CropListLabelsWidget(QWidget):
     """A widget that provides cropping functionality based on labels layer."""
 
     def __init__(self, viewer: napari.Viewer):
@@ -123,6 +123,6 @@ class CropLabelsWidget(QWidget):
 
 
 @napari_hook_implementation(specname="napari_experimental_provide_dock_widget")
-def napari_register_crop_dock_widget():
+def napari_register_crop_list_dock_widget():
     # you can return either a single widget, or a sequence of widgets
-    return CropLabelsWidget
+    return CropListLabelsWidget
