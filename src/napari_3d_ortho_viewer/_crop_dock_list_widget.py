@@ -74,8 +74,14 @@ class CropListLabelsWidget(QWidget):
 
         self.regions = regionprops(selected_layer.data)
         area = np.array([reg.area for reg in self.regions])
+        labels_list = np.array([reg.label for reg in self.regions])
 
-        return list(np.argsort(area)[::-1])
+        sorted_area = np.argsort(area)[::-1]
+        sorted_labels = labels_list[sorted_area]
+
+        self.label_id_to_ind = {l: i for l, i in zip(sorted_labels, sorted_area)}
+
+        return list(sorted_labels)
 
     def update_ids(self) -> None:
         self.create_id_selection()
@@ -87,8 +93,11 @@ class CropListLabelsWidget(QWidget):
             padd = 0
 
         slices = []
+
+        ids_from_labels = [self.label_id_to_ind[j] for j in self.id_selection.value]
+        bboxes = [self.regions[j].bbox for j in ids_from_labels]
+
         for i in range(ndim):
-            bboxes = [self.regions[j].bbox for j in self.id_selection.value]
             min_ = min([bbox[i] - padd for bbox in bboxes])
             if min_ < 0:
                 min_ = 0
