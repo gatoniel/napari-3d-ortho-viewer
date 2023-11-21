@@ -11,7 +11,7 @@ Napari 3D Ortho Viewer - an ortho viewer for napari for 3D images
 
 ----------------------------------
 
-This [napari] plugin was generated with [Cookiecutter] using [@napari]'s [cookiecutter-napari-plugin] template.
+https://github.com/gatoniel/merge-stardist-masks/raw/main/data/animation.mp4
 
 This plugin is heavily inspired by [ortho-view-napari].
 
@@ -55,6 +55,8 @@ Distributed under the terms of the [MIT] license,
 ## Issues
 
 If you encounter any problems, please [file an issue] along with a detailed description.
+
+This [napari] plugin was generated with [Cookiecutter] using [@napari]'s [cookiecutter-napari-plugin] template.
 
 [napari]: https://github.com/napari/napari
 [Cookiecutter]: https://github.com/audreyr/cookiecutter
