@@ -11,7 +11,7 @@ Napari 3D Ortho Viewer - an ortho viewer for napari for 3D images
 
 ----------------------------------
 
-https://github.com/gatoniel/napari-3d-ortho-viewer/raw/main/data/animation.mp4
+https://github.com/gatoniel/napari-3d-ortho-viewer/assets/40384506/4296dc11-ea37-40a0-8b17-eeb77480672f
 
 This plugin is heavily inspired by [ortho-view-napari].
 
