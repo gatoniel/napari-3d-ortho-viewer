@@ -11,7 +11,7 @@ Napari 3D Ortho Viewer - an ortho viewer for napari for 3D images
 
 ----------------------------------
 
-https://github.com/gatoniel/merge-stardist-masks/raw/main/data/animation.mp4
+https://github.com/gatoniel/napari-3d-ortho-viewer/raw/main/data/animation.mp4
 
 This plugin is heavily inspired by [ortho-view-napari].
 
