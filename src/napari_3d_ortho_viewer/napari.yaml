@@ -1,0 +1,22 @@
+name: napari-3d-ortho-viewer
+display_name: Ortho Viewer Widget
+# use 'hidden' to remove plugin from napari hub search results
+visibility: public
+contributions:
+  commands:
+    - id: napari-3d-ortho-viewer.make_ortho_viewer_widget
+      python_name: napari_3d_ortho_viewer:OrthoViewerWidget
+      title: Make ortho viewer widget
+    - id: napari-3d-ortho-viewer.make_crop_widget
+      python_name: napari_3d_ortho_viewer:CropLabelsWidget
+      title: Make crop labels widget
+    - id: napari-3d-ortho-viewer.make_crop_list_widget
+      python_name: napari_3d_ortho_viewer:CropListLabelsWidget
+      title: Make crop list labels widget
+  widgets:
+    - command: napari-3d-ortho-viewer.make_ortho_viewer_widget
+      display_name: Ortho Viewer
+    - command: napari-3d-ortho-viewer.make_crop_widget
+      display_name: Crop with labels
+    - command: napari-3d-ortho-viewer.make_crop_list_widget
+      display_name: Crop with label list

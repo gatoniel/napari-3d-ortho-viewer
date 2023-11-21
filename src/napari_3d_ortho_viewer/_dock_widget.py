@@ -3,7 +3,6 @@ from typing import List
 from typing import Optional
 
 import napari
-from napari_plugin_engine import napari_hook_implementation
 import numpy as np
 from magicgui.widgets import Checkbox
 from napari.layers import Image
@@ -84,7 +83,9 @@ class OrthoViewerWidget(QWidget):
         layer_names = [layer.name for layer in viewer.layers]
         viewer.layers.pop(layer_names.index(name))
 
-    def add_slicing(self, viewer: napari.Viewer, name: str = "slicing") -> None:
+    def add_slicing(
+        self, viewer: napari.Viewer, name: str = "slicing"
+    ) -> None:
         """Add labels layer initialized with zeros of same shape."""
         return viewer.add_labels(np.zeros(self.shape, dtype=int), name=name)
 
@@ -232,7 +233,9 @@ class OrthoViewerWidget(QWidget):
             v.mouse_double_click_callbacks.append(self.mouse_click)
             for layer in v.layers:
                 name = layer.name
-                if not name.startswith("slicing") and isinstance(layer, Labels):
+                if not name.startswith("slicing") and isinstance(
+                    layer, Labels
+                ):
                     layer.events.set_data.connect(self.refresh_on_set_data)
                     self.lbl_layers.append(layer)
 
@@ -350,9 +353,3 @@ class OrthoViewerWidget(QWidget):
             self.xy_viewer.dims.set_current_step(i, c)
             self.yz_viewer.dims.set_current_step(i, c)
             self.xz_viewer.dims.set_current_step(i, c)
-
-
-@napari_hook_implementation
-def napari_experimental_provide_dock_widget():
-    # you can return either a single widget, or a sequence of widgets
-    return OrthoViewerWidget

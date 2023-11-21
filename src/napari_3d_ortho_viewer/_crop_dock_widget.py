@@ -3,13 +3,10 @@ from typing import Optional, List, Tuple
 import napari
 import numpy as np
 from napari.layers import Labels, Image
-from napari_plugin_engine import napari_hook_implementation
 from qtpy.QtWidgets import QWidget
 from qtpy.QtWidgets import QVBoxLayout
 from magicgui.widgets import PushButton
 from magicgui.widgets import LineEdit
-from magicgui.widgets import ComboBox
-from magicgui.widgets import Select
 
 
 def str_to_int_list(s: str, delimiter=",") -> List[int]:
@@ -36,10 +33,14 @@ class CropLabelsWidget(QWidget):
         self.crop_button.changed.connect(self.button_changed)
         self.layout().addWidget(self.crop_button.native)
 
-        self.padding_field = LineEdit(name="padding_field", label="Pad crop", value=2)
+        self.padding_field = LineEdit(
+            name="padding_field", label="Pad crop", value=2
+        )
         self.layout().addWidget(self.padding_field.native)
 
-        self.labels_field = LineEdit(name="labels_field", label="Labels to crop")
+        self.labels_field = LineEdit(
+            name="labels_field", label="Labels to crop"
+        )
         self.layout().addWidget(self.labels_field.native)
 
     def get_slices(self) -> Tuple[slice]:
@@ -62,7 +63,9 @@ class CropLabelsWidget(QWidget):
             selected_layer = self.old_viewer.layers[first_labels_layer_ind]
 
         labels = selected_layer.data
-        selected_labels = [int(lbl) for lbl in self.labels_field.value.split(",")]
+        selected_labels = [
+            int(lbl) for lbl in self.labels_field.value.split(",")
+        ]
 
         selected_area = np.zeros_like(labels, dtype=bool)
         for lbl in selected_labels:
@@ -104,9 +107,3 @@ class CropLabelsWidget(QWidget):
                     slices.append(slice(None, None))
                     data = layer.data[Tuple(slices)]
                 viewer.add_image(data, name=name)
-
-
-@napari_hook_implementation(specname="napari_experimental_provide_dock_widget")
-def napari_register_crop_dock_widget():
-    # you can return either a single widget, or a sequence of widgets
-    return CropLabelsWidget

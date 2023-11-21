@@ -3,12 +3,10 @@ from typing import Optional, List, Tuple
 import napari
 import numpy as np
 from napari.layers import Labels, Image
-from napari_plugin_engine import napari_hook_implementation
 from qtpy.QtWidgets import QWidget
 from qtpy.QtWidgets import QVBoxLayout
 from magicgui.widgets import PushButton
 from magicgui.widgets import LineEdit
-from magicgui.widgets import ComboBox
 from magicgui.widgets import Select
 
 
@@ -36,11 +34,15 @@ class CropListLabelsWidget(QWidget):
         self.crop_button.changed.connect(self.button_changed)
         self.layout().addWidget(self.crop_button.native)
 
-        self.padding_field = LineEdit(name="padding_field", label="Pad crop", value=2)
+        self.padding_field = LineEdit(
+            name="padding_field", label="Pad crop", value=2
+        )
         self.layout().addWidget(self.padding_field.native)
 
         # add update id list button
-        self.update_button = PushButton(name="update_button", label="Update IDs")
+        self.update_button = PushButton(
+            name="update_button", label="Update IDs"
+        )
         self.update_button.changed.connect(self.update_ids)
         self.layout().addWidget(self.update_button.native)
 
@@ -53,7 +55,9 @@ class CropListLabelsWidget(QWidget):
             self.layout().removeWidget(self.id_selection.native)
 
         self.id_selection = Select(
-            name="labels_ids_dropdown", label="Label IDs", choices=self.labels_list()
+            name="labels_ids_dropdown",
+            label="Label IDs",
+            choices=self.labels_list(),
         )
         self.layout().addWidget(self.id_selection.native)
 
@@ -79,7 +83,9 @@ class CropListLabelsWidget(QWidget):
         sorted_area = np.argsort(area)[::-1]
         sorted_labels = labels_list[sorted_area]
 
-        self.label_id_to_ind = {l: i for l, i in zip(sorted_labels, sorted_area)}
+        self.label_id_to_ind = {
+            l: i for l, i in zip(sorted_labels, sorted_area)
+        }
 
         return list(sorted_labels)
 
@@ -94,7 +100,9 @@ class CropListLabelsWidget(QWidget):
 
         slices = []
 
-        ids_from_labels = [self.label_id_to_ind[j] for j in self.id_selection.value]
+        ids_from_labels = [
+            self.label_id_to_ind[j] for j in self.id_selection.value
+        ]
         bboxes = [self.regions[j].bbox for j in ids_from_labels]
 
         for i in range(ndim):
@@ -129,9 +137,3 @@ class CropListLabelsWidget(QWidget):
                     slices.append(slice(None, None))
                     data = layer.data[Tuple(slices)]
                 viewer.add_image(data, name=name)
-
-
-@napari_hook_implementation(specname="napari_experimental_provide_dock_widget")
-def napari_register_crop_list_dock_widget():
-    # you can return either a single widget, or a sequence of widgets
-    return CropListLabelsWidget
