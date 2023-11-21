@@ -132,8 +132,12 @@ class OrthoViewerWidget(QWidget):
         self.yz_slicing = self.add_slicing(self.yz_viewer)
         self.xz_slicing = self.add_slicing(self.xz_viewer)
 
-        self.vol_slicing_plane = self.add_slicing(self.old_viewer, name="slicing plane")
-        self.vol_slicing_lines = self.add_slicing(self.old_viewer, name="slicing lines")
+        self.vol_slicing_plane = self.add_slicing(
+            self.old_viewer, name="slicing plane"
+        )
+        self.vol_slicing_lines = self.add_slicing(
+            self.old_viewer, name="slicing lines"
+        )
         self.toggle_vol_slicing = ToggleTwoVisibleLayers(
             self.vol_slicing_plane, self.vol_slicing_lines
         )
@@ -144,7 +148,12 @@ class OrthoViewerWidget(QWidget):
 
     def orient_all_viewers(self) -> None:
         """First reset current_step and then roll some views accordingly."""
-        for v in [self.old_viewer, self.xy_viewer, self.yz_viewer, self.xz_viewer]:
+        for v in [
+            self.old_viewer,
+            self.xy_viewer,
+            self.yz_viewer,
+            self.xz_viewer,
+        ]:
             ndim = v.dims.ndim
             v.dims.current_step = (0,) * ndim
             v.dims.order = tuple(range(ndim))
@@ -152,11 +161,11 @@ class OrthoViewerWidget(QWidget):
         self.old_viewer.dims.ndisplay = 3
 
         self.yz_viewer.dims._roll()
-        self.yz_viewer.dims._transpose()
+        self.yz_viewer.dims.transpose()
 
         self.xz_viewer.dims._roll()
         self.xz_viewer.dims._roll()
-        self.xz_viewer.dims._transpose()
+        self.xz_viewer.dims.transpose()
 
     def maximize(self) -> None:
         """Show all viewer windows at corrent positions on Desktop."""
@@ -214,7 +223,12 @@ class OrthoViewerWidget(QWidget):
             v.dims.events.current_step.connect(self.update_all)
 
         # display changes in the lbl layers in all viewers and connect double clicks
-        for v in [self.xy_viewer, self.yz_viewer, self.xz_viewer, self.old_viewer]:
+        for v in [
+            self.xy_viewer,
+            self.yz_viewer,
+            self.xz_viewer,
+            self.old_viewer,
+        ]:
             v.mouse_double_click_callbacks.append(self.mouse_click)
             for layer in v.layers:
                 name = layer.name
@@ -225,11 +239,15 @@ class OrthoViewerWidget(QWidget):
         # set contour to 1
         for v in [self.xy_viewer, self.yz_viewer, self.xz_viewer]:
             for layer in v.layers:
-                if not layer.name.startswith("slicing") and isinstance(layer, Labels):
+                if not layer.name.startswith("slicing") and isinstance(
+                    layer, Labels
+                ):
                     layer.contour = 1
 
         for layer in self.old_viewer.layers:
-            if isinstance(layer, Labels) and not layer.name.startswith("slicing"):
+            if isinstance(layer, Labels) and not layer.name.startswith(
+                "slicing"
+            ):
                 layer.events.set_data.connect(self.refresh_on_set_data)
 
         self.update_all()
